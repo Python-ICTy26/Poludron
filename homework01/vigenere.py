@@ -10,12 +10,10 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    #Делаем одиннаковой длины ключ и слово
     key = ""
     while len(key) < len(plaintext):
         key += keyword
     key = key[: len(plaintext)]
-    #С помощью шифра Веженера зашифровываем слово
     for i in range(len(plaintext)):
         if plaintext[i].isalpha():
             if plaintext[i].isupper():
@@ -41,14 +39,10 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-
-    #Делаем одиннаковой длины ключ и слово
     key = ""
     while len(key) < len(ciphertext):
         key += keyword
     key = key[: len(ciphertext)]
-
-    #С помощью шифра Веженера дешифровываем слово
     for i in range(len(ciphertext)):
         if ciphertext[i].isalpha():
             if ciphertext[i].isupper():
