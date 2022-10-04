@@ -1,3 +1,5 @@
+
+
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
@@ -10,7 +12,24 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+
+    #Делаем одиннаковой длины ключ и слово
+    key = ""
+    while len(key) < len(plaintext):
+        key += keyword
+    key = key[: len(plaintext)]
+
+    #С помощью шифра Веженера зашифровываем слово
+    for i in range(len(plaintext)):
+        if plaintext[i].isalpha():
+            if plaintext[i].isupper():
+                shift = ord(key[i % len(key)]) - ord("A")
+                ciphertext += chr(((ord(plaintext[i]) - ord("A")) + shift) % 26 + ord("A"))
+            else:
+                shift = ord(key[i % len(key)]) - ord("a")
+                ciphertext += chr(((ord(plaintext[i]) - ord("a")) + shift) % 26 + ord("a"))
+        else:
+            ciphertext += plaintext[i]
     return ciphertext
 
 
@@ -26,5 +45,24 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
+
+    #Делаем одиннаковой длины ключ и слово
+    key = ""
+    while len(key) < len(ciphertext):
+        key += keyword
+    key = key[: len(ciphertext)]
+
+    for i in range(len(ciphertext)):
+        if ciphertext[i].isalpha():
+            if ciphertext[i].isupper():
+                shift = ord(key[i % len(key)]) - ord("A")
+                plaintext += chr(((ord(ciphertext[i]) - ord("A")) - shift) % 26 + ord("A"))
+            else:
+                shift = ord(key[i % len(key)]) - ord("a")
+                plaintext += chr(((ord(ciphertext[i]) - ord("a")) - shift) % 26 + ord("a"))
+        else:
+            plaintext += ciphertext[i]
     # PUT YOUR CODE HERE
     return plaintext
+
+print(decrypt_vigenere("python", "a"))
