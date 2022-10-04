@@ -13,7 +13,7 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    return n>1 and all(n % i != 0 for i in range(2, int(n**0.5)+1))
+    return n > 1 and all(n % i != 0 for i in range(2, int(n**0.5)+1))
 
 
 def gcd(a: int, b: int) -> int:
@@ -25,9 +25,11 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    if a == 0:
+        return b
+    return gcd(b % a, a)
 
+print(gcd(3, 7))
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
