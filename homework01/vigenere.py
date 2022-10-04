@@ -52,6 +52,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
         key += keyword
     key = key[: len(ciphertext)]
 
+    #С помощью шифра Веженера дешифровываем слово
     for i in range(len(ciphertext)):
         if ciphertext[i].isalpha():
             if ciphertext[i].isupper():
@@ -64,5 +65,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
             plaintext += ciphertext[i]
     # PUT YOUR CODE HERE
     return plaintext
-
-print(decrypt_vigenere("python", "a"))
