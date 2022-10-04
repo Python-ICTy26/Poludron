@@ -63,5 +63,4 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
                 plaintext += chr(((ord(ciphertext[i]) - ord("a")) - shift) % 26 + ord("a"))
         else:
             plaintext += ciphertext[i]
-    # PUT YOUR CODE HERE
     return plaintext
