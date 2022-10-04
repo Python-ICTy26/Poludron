@@ -26,7 +26,6 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
             plaintext += i
     return plaintext
 
-print(decrypt_caesar("SBWKRQ"))
 
 '''def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     """
@@ -35,14 +34,3 @@ print(decrypt_caesar("SBWKRQ"))
     best_shift = 0
     # PUT YOUR CODE HERE
     return best_shift'''
-
-
-'''for i in plaintext:
-        if i.isalpha():
-            stayInAlphabet = ord(i) + shift 
-            if stayInAlphabet > ord('z'):
-                stayInAlphabet -= 26
-            finalLetter = chr(stayInAlphabet)
-            ciphertext += finalLetter
-        else:
-            plaintext += i'''
