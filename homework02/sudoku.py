@@ -1,6 +1,6 @@
 import pathlib
 import typing as tp
-
+from random import *
 
 T = tp.TypeVar("T")
 
@@ -185,7 +185,14 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+    pos = solve([["." for _ in range(9)] for _ in range(9)])
+    k = 0
+    while k < 81 - N:
+        i, j = randint(0, 8), randint(0, 8)
+        if pos[i][j] != ".":
+            pos[i][j] = "."
+            k += 1
+    return pos
 
 
 if __name__ == "__main__":
