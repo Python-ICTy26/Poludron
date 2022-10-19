@@ -6,6 +6,7 @@ T = tp.TypeVar("T")
 
 
 def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
+    
     """ Прочитать Судоку из указанного файла """
     path = pathlib.Path(path)
     with path.open() as f:
@@ -20,6 +21,7 @@ def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
 
 
 def display(grid: tp.List[tp.List[str]]) -> None:
+    
     """Вывод Судоку """
     width = 2
     line = "+".join(["-" * (width * 3)] * 3)
@@ -43,6 +45,7 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
+    
     matrix = [values[(n * i):(n * (i + 1))] for i in range(n)]
     return matrix
 
@@ -102,6 +105,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
     """
     for i in range(len(grid)):
         for j in range(len(grid)):
+            
             if grid[i][j] == '.':
                 return i, j
 
@@ -120,11 +124,16 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     col = get_col(grid, pos)
     row = get_row(grid, pos)
     block = get_block(grid, pos)
-    return {str(i) for i in range(1, 10) if (str(i) not in set(col)) and (str(i) not in set(row)) and (str(i) not in set(block))}
+    return {
+        str(i) 
+        for i in range(1, 10) 
+        if (str(i) not in set(col)) and (str(i) not in set(row)) and (str(i) not in set(block))
+    }
 
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+    
     """ Решение пазла, заданного в grid """
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -150,17 +159,21 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
         return None
 
 
-
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
+    
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
+    
     optional_set = {str(i) for i in range(1,10)}
     for i in range(len(solution)):
         for j in range(len(solution)):
-            if set(get_row(solution, (i, j))) != optional_set or set(get_col(solution, (i, j))) != optional_set or set(get_block(solution, (i, j))) != optional_set:
+            if (
+                set(get_row(solution, (i, j))) != optional_set 
+                or set(get_col(solution, (i, j))) != optional_set 
+                or set(get_block(solution, (i, j))) != optional_set
+            ):
                 return False
     return True
-
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
