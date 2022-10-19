@@ -154,7 +154,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    optional_set = {i for i in range(1,10)}
+    optional_set = {str(i) for i in range(1,10)}
     for i in range(len(solution)):
         for j in range(len(solution)):
             if set(get_row(solution, (i, j))) != optional_set or set(get_col(solution, (i, j))) != optional_set or set(get_block(solution, (i, j))) != optional_set:
