@@ -5,6 +5,7 @@ from copy import deepcopy
 import pygame
 from pygame.locals import *
 
+
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
@@ -154,3 +155,7 @@ class GameOfLife:
                     if sum(self.get_neighbours((i, j))) == 3:
                         grid[i][j] = 1
         return grid
+
+if __name__ == '__main__':
+    game = GameOfLife(320, 240, 20)
+    game.run()
