@@ -30,13 +30,24 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize == True:
-            return [[random.randint(0,1) for i in range(self.cell_width)] for j in range(self.cell_height)]
+            return [[random.randint(0,1) for _ in range(self.cols)] for _ in range(self.rows)]
         else:
-            return [[0 for i in range(self.cell_width)] for j in range(self.cell_height)]
+            return [[0 for _ in range(self.cols)] for _ in range(self.rows)]
 
     def get_neighbours(self, cell: Cell) -> Cells:
         # Copy from previous assignment
-        pass
+        row, col = cell
+        neighbours = []
+        positions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+
+        for i in positions:
+            row_pos, col_pos = row + i[0], col + i[1]
+            if row_pos < 0 or row_pos >= self.rows or col_pos < 0 or col_pos >= self.cols:
+                continue
+            else:
+                neighbours.append(self.curr_generation[row_pos][col_pos])
+        return neighbours
+
 
     def get_next_generation(self) -> Grid:
         # Copy from previous assignment
