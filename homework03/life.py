@@ -67,21 +67,23 @@ class GameOfLife:
         """
         Выполнить один шаг игры.
         """
-        pass
+        self.prev_generation = self.curr_generation
+        self.curr_generation = self.get_next_generation()
+        self.generations += 1
 
     @property
     def is_max_generations_exceeded(self) -> bool:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        pass
+        return self.generations >= self.max_generations
 
     @property
     def is_changing(self) -> bool:
         """
         Изменилось ли состояние клеток с предыдущего шага.
         """
-        pass
+        return self.prev_generation != self.curr_generation
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
