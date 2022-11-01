@@ -1,6 +1,7 @@
 import pathlib
 import random
 import typing as tp
+from copy import deepcopy
 
 import pygame
 from pygame.locals import *
@@ -51,7 +52,16 @@ class GameOfLife:
 
     def get_next_generation(self) -> Grid:
         # Copy from previous assignment
-        pass
+        grid = deepcopy(self.curr_generation)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if self.curr_generation[i][j] == 1:
+                    if sum(self.get_neighbours((i, j))) not in [2, 3]:
+                        grid[i][j] = 0
+                else:
+                    if sum(self.get_neighbours((i, j))) == 3:
+                        grid[i][j] = 1
+        return grid
 
     def step(self) -> None:
         """
