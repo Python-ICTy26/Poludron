@@ -14,7 +14,12 @@ class Console(UI):
 
     def draw_grid(self, screen) -> None:
         """ Отобразить состояние клеток. """
-        pass
+        for x in range(self.life.rows):
+            for y in range(self.life.cols):
+                if self.life.curr_generation[x][y] == 1:
+                    screen.addch(x + 1, y + 1, "#")
+                else:
+                    screen.addch(x + 1, y + 1, " ")
 
     def run(self) -> None:
         screen = curses.initscr()
