@@ -24,4 +24,16 @@ class Console(UI):
     def run(self) -> None:
         screen = curses.initscr()
         # PUT YOUR CODE HERE
-        curses.endwin()
+        while True:
+            self.draw_borders(screen)
+            self.draw_grid(screen)
+            screen.refresh()
+            self.life.step()
+            if screen.getch() == 32:  # space
+                curses.endwin()
+                break
+
+if __name__ == "__main__":
+    life = GameOfLife((24, 80), max_generations=50)
+    ui = Console(life)
+    ui.run()
