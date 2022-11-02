@@ -31,7 +31,7 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
         if randomize == True:
-            return [[random.randint(0,1) for _ in range(self.cols)] for _ in range(self.rows)]
+            return [[random.randint(0, 1) for _ in range(self.cols)] for _ in range(self.rows)]
         else:
             return [[0 for _ in range(self.cols)] for _ in range(self.rows)]
 
@@ -48,7 +48,6 @@ class GameOfLife:
             else:
                 neighbours.append(self.curr_generation[row_pos][col_pos])
         return neighbours
-
 
     def get_next_generation(self) -> Grid:
         # Copy from previous assignment
@@ -99,10 +98,12 @@ class GameOfLife:
         life.curr_generation = grid_list
         return life
 
+
 def save(self, filename: pathlib.Path) -> None:
-        """
-        Сохранить текущее состояние клеток в указанный файл.
-        """
-        with open(filename, "w") as file:
-            for i in self.curr_generation:
-                file.write("".join([str(j) for j in i]) + "\n")
+    """
+    Сохранить текущее состояние клеток в указанный файл.
+    """
+    with open(filename, "w") as file:
+        for i in self.curr_generation:
+            file.write("".join([str(j) 
+for j in i]) + "\n")
