@@ -35,6 +35,45 @@ class GUI(UI):
                     ),
                 )
 
+    def cell_edit(self, x, y) -> None:
+        row = y // self.cell_size
+        col = x // self.cell_size
+        if self.life.curr_generation[row][col]:
+            self.life.curr_generation[row][col] = 0
+        else: 1
+
     def run(self) -> None:
         # Copy from previous assignment
-        pass
+        pygame.init()
+        clock = pygame.time.Clock()
+        pygame.display.set_caption("Game of Life")
+        self.screen.fill(pygame.Color("white"))
+
+        running = True
+        pause = False
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        pause = not pause
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    self.cell_edit(x, y)
+                    self.draw_grid()
+                    self.draw_lines()
+                    pygame.display.flip()
+
+            if not pause:
+                self.life.step()
+                self.draw_grid()
+                self.draw_lines()
+                pygame.display.flip()
+            clock.tick(self.speed)
+            pygame.quit()
+
+if __name__ == "__main__":
+    game = GameOfLife(size=(20, 20), randomize=True)
+    gui = GUI(life=game, cell_size=20)
+    gui.run()
