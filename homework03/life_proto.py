@@ -134,7 +134,7 @@ class GameOfLife:
             if (
                 row_pos < 0
                 or row_pos >= self.cell_height
-                or col_pos < 0 
+                or col_pos < 0
                 or col_pos >= self.cell_width
             ):
                 continue
@@ -162,7 +162,7 @@ class GameOfLife:
                         grid[i][j] = 1
         return grid
 
-    
+
 if __name__ == "__main__":
     game = GameOfLife(320, 240, 20)
     game.run()
