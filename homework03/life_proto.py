@@ -84,7 +84,7 @@ class GameOfLife:
         """
         if randomize == True:
             return [
-                [random.randint(0, 1) for _ in range(self.cell_height)] 
+                [random.randint(0, 1) for _ in range(self.cell_height)]
                 for _ in range(self.cell_width)
             ]
         else:
