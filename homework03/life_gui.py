@@ -26,7 +26,9 @@ class GUI(UI):
             for y in range(self.life.cols):
                 pygame.draw.rect(
                     self.screen,
-                    pygame.Color("green") if self.life.curr_generation[x][y] == 1 else pygame.Color("white"),
+                    pygame.Color("green") 
+                    if self.life.curr_generation[x][y] == 1 
+                    else pygame.Color("white"),
                     (
                         y * self.cell_size,
                         x * self.cell_size,
@@ -40,7 +42,8 @@ class GUI(UI):
         col = x // self.cell_size
         if self.life.curr_generation[row][col]:
             self.life.curr_generation[row][col] = 0
-        else: 1
+        else: 
+            1
 
     def run(self) -> None:
         # Copy from previous assignment
@@ -73,7 +76,7 @@ class GUI(UI):
             clock.tick(self.speed)
             pygame.quit()
 
+            
 if __name__ == "__main__":
     game = GameOfLife(size=(20, 20), randomize=True)
-    gui = GUI(life=game, cell_size=20)
-    gui.run()
+    gui = GUI(life=game, cell_size=20).run()
