@@ -105,5 +105,4 @@ def save(self, filename: pathlib.Path) -> None:
     """
     with open(filename, "w") as file:
         for i in self.curr_generation:
-            file.write("".join([str(j) 
-for j in i]) + "\n")
+            file.write("".join([str(j) for j in i]) + "\n")
