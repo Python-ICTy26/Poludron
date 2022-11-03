@@ -31,14 +31,14 @@ class GameOfLife:
         self.speed = speed
 
     def draw_lines(self) -> None:
-        """ Отрисовать сетку """
+        """Отрисовать сетку"""
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
 
     def run(self) -> None:
-        """ Запустить игру """
+        """Запустить игру"""
         pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
@@ -83,7 +83,10 @@ class GameOfLife:
             Матрица клеток размером `cell_height` х `cell_width`.
         """
         if randomize == True:
-            return [[random.randint(0, 1) for _ in range(self.cell_height)] for _ in range(self.cell_width)]
+            return [
+                [random.randint(0, 1) for _ in range(self.cell_height)] 
+                for _ in range(self.cell_width)
+            ]
         else:
             return [[0 for _ in range(self.cell_height)] for _ in range(self.cell_width)]
 
@@ -101,9 +104,8 @@ class GameOfLife:
                         x * self.cell_size,
                         self.cell_size,
                         self.cell_size,
-                    )
+                    ),
                 )
-
 
     def get_neighbours(self, cell: Cell) -> Cells:
         """
@@ -129,7 +131,12 @@ class GameOfLife:
 
         for i in positions:
             row_pos, col_pos = row + i[0], col + i[1]
-            if row_pos < 0 or row_pos >= self.cell_height or col_pos < 0 or col_pos >= self.cell_width:
+            if (
+                row_pos < 0
+                or row_pos >= self.cell_height
+                or col_pos < 0 
+                or col_pos >= self.cell_width
+            ):
                 continue
             else:
                 neighbours.append(self.grid[row_pos][col_pos])
@@ -155,6 +162,7 @@ class GameOfLife:
                         grid[i][j] = 1
         return grid
 
-if __name__ == '__main__':
+    
+if __name__ == "__main__":
     game = GameOfLife(320, 240, 20)
     game.run()
