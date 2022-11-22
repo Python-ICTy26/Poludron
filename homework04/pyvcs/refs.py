@@ -23,8 +23,12 @@ def ref_resolve(gitdir: pathlib.Path, refname: str) -> str:
 
 
 def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
-    # PUT YOUR CODE HERE
-    ...
+    refname = get_ref(gitdir)
+    if not (gitdir / pathlib.Path(refname)).exists():
+        return None
+    with open(gitdir / pathlib.Path(refname), "r") as ref:
+        data = ref.read()
+    return data
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
