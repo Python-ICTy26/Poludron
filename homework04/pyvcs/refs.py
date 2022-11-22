@@ -40,5 +40,9 @@ def is_detached(gitdir: pathlib.Path) -> bool:
 
 
 def get_ref(gitdir: pathlib.Path) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / "HEAD", "r") as head:
+        if not is_detached(gitdir):
+            refname = head.read()[5:-1]
+        else:
+            refname = head.read()
+    return refname
