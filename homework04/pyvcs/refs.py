@@ -32,8 +32,11 @@ def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
 
 
 def is_detached(gitdir: pathlib.Path) -> bool:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / "HEAD", "r") as head:
+        data = head.read()
+    if data[:3] == "ref":
+        return False
+    return True
 
 
 def get_ref(gitdir: pathlib.Path) -> str:
