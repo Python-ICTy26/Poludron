@@ -8,8 +8,8 @@ def update_ref(gitdir: pathlib.Path, ref: tp.Union[str, pathlib.Path], new_value
 
 
 def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
-    # PUT YOUR CODE HERE
-    ...
+    with open(gitdir / name, "w") as ref_file:
+        ref_file.write(ref)
 
 
 def ref_resolve(gitdir: pathlib.Path, refname: str) -> str:
