@@ -13,8 +13,13 @@ def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
 
 
 def ref_resolve(gitdir: pathlib.Path, refname: str) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    if refname == "HEAD":
+        refname = get_ref(gitdir)
+    if is_detached(gitdir):
+        return refname
+    with open(gitdir / pathlib.Path(refname), "r") as ref:
+        data = ref.read()
+    return data
 
 
 def resolve_head(gitdir: pathlib.Path) -> tp.Optional[str]:
