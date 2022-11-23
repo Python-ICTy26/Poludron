@@ -83,8 +83,17 @@ def cat_file(obj_name: str, pretty: bool = True) -> None:
 
 
 def find_tree_files(tree_sha: str, gitdir: pathlib.Path) -> tp.List[tp.Tuple[str, str]]:
-    # PUT YOUR CODE HERE
-    ...
+    result = []
+    header, data = read_object(tree_sha, gitdir)
+    for f in read_tree(data):
+        if read_object(f[2], gitdir)[0] == "tree":
+            tree = find_tree_files(f[2], gitdir)
+            for blob in tree:
+                name = f[1] + "/" + blob[0]
+                result.append((name, blob[1]))
+        else:
+            result.append((f[1], f[2]))
+    return result
 
 
 def commit_parse(raw: bytes, start: int = 0, dct=None):
