@@ -16,8 +16,21 @@ def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
 
 
 def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
-    # PUT YOUR CODE HERE
-    ...
+    if not 4 <= len(obj_name) <= 40:
+        raise Exception(f"Not a valid object name {obj_name}")
+    dir_name = obj_name[:2]
+    obj_file = obj_name[2:]
+    obj_dir = str(gitdir) + "/objects/" + dir_name
+    files_list = os.listdir(obj_dir)
+    objs = []
+    for obj in files_list:
+        if obj[: len(obj_file)] == obj_file:
+            objs.append(dir_name + obj)
+
+    if not objs:
+        raise Exception(f"Not a valid object name {obj_name}")
+
+    return objs
 
 
 def find_object(obj_name: str, gitdir: pathlib.Path) -> str:
