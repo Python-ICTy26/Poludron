@@ -34,8 +34,10 @@ def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
 
 
 def find_object(obj_name: str, gitdir: pathlib.Path) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    dir_name = obj_name[:2]
+    file_name = obj_name[2:]
+    path = str(gitdir) + os.sep + dir_name + os.sep + file_name
+    return path
 
 
 def read_object(sha: str, gitdir: pathlib.Path) -> tp.Tuple[str, bytes]:
