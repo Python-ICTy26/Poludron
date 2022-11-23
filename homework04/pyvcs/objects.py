@@ -11,9 +11,19 @@ from pyvcs.repo import repo_find
 
 
 def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
-    # PUT YOUR CODE HERE
-    ...
-
+    header = f"{fmt} {len(data)}\0".encode()
+    store = header + data
+    obj_hash = hashlib.sha1(store).hexdigest()
+    obj = zlib.compress(store)
+    if write:
+        gitdir = repo_find()
+        obj_dir = pathlib.Path(str(gitdir) + "/objects/" + obj_hash[:2])
+        if not obj_dir.is_dir():
+            os.makedirs(obj_dir)
+        obj_name = obj_dir / obj_hash[2:]
+        with open(obj_name, "wb") as obj_file:
+            obj_file.write(obj)
+    return obj_hash
 
 def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
     if not 4 <= len(obj_name) <= 40:
