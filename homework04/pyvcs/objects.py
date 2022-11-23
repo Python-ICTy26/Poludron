@@ -68,8 +68,18 @@ def read_tree(data: bytes) -> tp.List[tp.Tuple[int, str, str]]:
 
 
 def cat_file(obj_name: str, pretty: bool = True) -> None:
-    # PUT YOUR CODE HERE
-    ...
+    gitdir = repo_find()
+    obj_type, content = read_object(obj_name, gitdir)
+    if obj_type == "blob":
+        if pretty:
+            print(content.decode("ascii"))
+        else:
+            print(str(content))
+    elif obj_type == "tree":
+        print(read_tree(content))
+    else:
+        _, content = read_object(resolve_object(obj_name, repo_find())[0], repo_find())
+        print(content.decode())
 
 
 def find_tree_files(tree_sha: str, gitdir: pathlib.Path) -> tp.List[tp.Tuple[str, str]]:
