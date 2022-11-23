@@ -48,8 +48,23 @@ def read_object(sha: str, gitdir: pathlib.Path) -> tp.Tuple[str, bytes]:
 
 
 def read_tree(data: bytes) -> tp.List[tp.Tuple[int, str, str]]:
-    # PUT YOUR CODE HERE
-    ...
+    tree_entries: tp.List[tp.Tuple[int, str, str]] = []
+    while len(data):
+        sha = bytes.hex(data[-20:])
+        data = data[:-21]
+        obj_type, _ = read_object(sha, repo_find())
+        space_pos = data.rfind(b" ")
+        name = data[space_pos + 1:].decode("ascii")
+        data = data[:space_pos]
+        if obj_type == "tree":
+            mode = "40000"
+        else:
+            mode = data[-6:].decode("ascii")
+        mode_len = -1 * len(mode)
+        data = data[:mode_len]
+        mode_int = int(mode)
+        tree_entries.insert(0, (mode_int, sha, name))
+    return tree_entries
 
 
 def cat_file(obj_name: str, pretty: bool = True) -> None:
