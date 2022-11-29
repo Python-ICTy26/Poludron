@@ -8,7 +8,6 @@ from pandas import json_normalize
 
 from vkapi import config, session
 from vkapi.exceptions import APIError
-from vkapi.session import Session
 
 
 def get_posts_2500(
@@ -55,6 +54,7 @@ def get_wall_execute(
     for k in range(((count - 1) // max_count) + 1):
         try:
             code = Template(
+                """var posts = []; var i = 0; while (i < $trys) {posts = posts + API.wall.get({"owner_id":$owner_id,"domain":"$domain","offset":$offset + i*100,"count":"$count","filter":"$filter","extended":$extended,"fields":'$fields',"v":$version})['items']; i=i+1;} return {'count': posts.length, 'items': posts};"""
             ).substitute(
                 owner_id=owner_id if owner_id else 0,
                 domain=domain,
