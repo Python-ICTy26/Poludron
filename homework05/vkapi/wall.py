@@ -8,6 +8,7 @@ from pandas import json_normalize
 
 from vkapi import config, session
 from vkapi.exceptions import APIError
+from vkapi.session import Session
 
 
 def get_posts_2500(
@@ -49,4 +50,39 @@ def get_wall_execute(
     :param fields: Список дополнительных полей для профилей и сообществ, которые необходимо вернуть.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+    start = Session(config.VK_CONFIG["domain"])
+    all_wall_posts = []
+    for k in range(((count - 1) // max_count) + 1):
+        try:
+            code = Template(
+            ).substitute(
+                owner_id=owner_id if owner_id else 0,
+                domain=domain,
+                offset=offset + max_count * k,
+                count=count - max_count * k if count - max_count * k < 101 else 100,
+                trys=(count - max_count * k - 1) // 100 + 1
+                if count - max_count * k < max_count + 1
+                else max_count // 100,
+                filter=filter,
+                extended=extended,
+                fields=fields,
+                version=str(config.VK_CONFIG["version"]),
+            )
+            print(code)
+            wall_posts = start.post(
+                "execute",
+                data={
+                    "code": code,
+                    "access_token": config.VK_CONFIG["access_token"],
+                    "v": config.VK_CONFIG["version"],
+                },
+            )
+            print(wall_posts)
+            time.sleep(2)
+
+            for one_post in wall_posts.json()["response"]["items"]:
+                all_wall_posts.append(one_post)
+            print(len(all_wall_posts))
+        except:
+            pass
+    return json_normalize(all_wall_posts)
