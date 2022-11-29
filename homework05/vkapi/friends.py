@@ -5,6 +5,7 @@ import typing as tp
 
 from vkapi import config, session
 from vkapi.exceptions import APIError
+from vkapi.session import Session
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
@@ -28,7 +29,26 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    pass
+    start = Session(config.VK_CONFIG["domain"])
+    resp = FriendsResponse(0, [0])
+    try:
+        friends = start.get(
+            "friends.get",
+            params={
+                "access_token": config.VK_CONFIG["access_token"],
+                "v": config.VK_CONFIG["version"],
+                "user_id": user_id,
+                "count": count,
+                "offset": offset,
+                "fields": fields,
+            },
+        )
+        resp = FriendsResponse(
+            friends.json()["response"]["count"], friends.json()["response"]["items"]
+        )
+    except:
+        pass
+    return resp
 
 
 class MutualFriends(tp.TypedDict):
