@@ -1,4 +1,4 @@
-responses==
+responses
 requests
 httpretty
 tqdm
