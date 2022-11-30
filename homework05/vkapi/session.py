@@ -39,7 +39,6 @@ class Session:
         response = self.session.get(self.base_url + "/" + url, *args, **kwargs)
         return response
 
-
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
         kwargs["timeout"] = kwargs["timeout"] if "timeout" in kwargs else self.timeout
         response = self.session.post(self.base_url + "/" + url, *args, **kwargs)
