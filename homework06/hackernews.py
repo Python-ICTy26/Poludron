@@ -1,9 +1,6 @@
-from bottle import (
-    route, run, template, request, redirect
-)
-
+from bottle import redirect, request, route, run, template
+from db import News, fill, session
 from scraputils import get_news
-from db import News, session, fill
 from bayes import NaiveBayesClassifier
 
 
