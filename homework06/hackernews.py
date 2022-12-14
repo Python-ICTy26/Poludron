@@ -7,6 +7,7 @@ from bayes import NaiveBayesClassifier
 
 nltk.download("punkt")
 
+
 def prepare(s):
     translator = str.maketrans("", "", string.punctuation)
     s = s.translate(translator)
