@@ -32,9 +32,24 @@ class NaiveBayesClassifier:
 
     def predict(self, X):
         """ Perform classification on an array of test vectors X. """
-        pass
+        predictions = []
+        for text in x:
+            predict = {key: log(value) for key, value in self.classes.items()}
+            for word in text:
+                if word in self.dictionary:
+                    for key in predict.keys():
+                        predict[key] += log(self.dictionary[word][key])
+
+            predicted_classes = dict(sorted(predict.items(), key=lambda x: x[1]))
+            predictions.append(list(predicted_classes)[-1])
+        return predictions
 
     def score(self, X_test, y_test):
         """ Returns the mean accuracy on the given test data and labels. """
-        pass
+        predicted = self.predict(x_test)
+        guessed = 0
+        for i, label in enumerate(y_test):
+            if predicted[i] == label:
+                guessed += 1
+        return guessed / len(y_test)
 
