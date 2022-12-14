@@ -1,11 +1,26 @@
+from math import log
+
+import numpy as np
+
+
 class NaiveBayesClassifier:
 
     def __init__(self, alpha):
-        pass
+        self.alpha = alpha
+        self.dictionary = {}
+        self.classes = {}
 
     def fit(self, X, y):
         """ Fit Naive Bayes classifier according to X, y. """
-        pass
+        values, counts = np.unique(np.array(y), return_counts=True)
+        words_per_class = {value: 0 for value in values}
+        self.classes = {values[i]: counts[i] / len(y) for i in range(len(values))}
+        for i, text in enumerate(x):
+            for word in text:
+                if word not in self.dictionary:
+                    self.dictionary[word] = {value: 0 for value in values}
+                self.dictionary[word][y[i]] += 1
+                words_per_class[y[i]] += 1
 
     def predict(self, X):
         """ Perform classification on an array of test vectors X. """
