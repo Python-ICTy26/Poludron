@@ -6,11 +6,11 @@ from sqlalchemy.orm import sessionmaker
 def fill(dictionary):
     s = session()
     news = News(
-        title=dictionary['title'],
-        author=dictionary['author'],
-        url=dictionary['url'],
-        comments=dictionary['comments'],
-        points=dictionary['points']
+        title=dictionary["title"],
+        author=dictionary["author"],
+        url=dictionary["url"],
+        comments=dictionary["comments"],
+        points=dictionary["points"],
     )
     s.add(news)
     s.commit()
