@@ -32,7 +32,7 @@ def extract_news(parser):
 
 def extract_next_page(parser):
     """ Extract next page URL """
-    # PUT YOUR CODE HERE
+    return parser.findAll("table")[2].findAll("a", {"class": "morelink"})[0]["href"]
 
 
 def get_news(url, n_pages=1):
