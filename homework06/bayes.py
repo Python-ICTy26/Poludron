@@ -21,10 +21,28 @@ class NaiveBayesClassifier:
                     self.dictionary[word] = {value: 0 for value in values}
                 self.dictionary[word][y[i]] += 1
                 words_per_class[y[i]] += 1
+        
+        for word, counter in self.dictionary.items():
+            probabilities = {
+                key: (counter[key] + self.alpha)
+                / (words_per_class[key] + self.alpha * len(self.dictionary))
+                for key in counter.keys()
+            }
+            self.dictionary[word] = probabilities
 
     def predict(self, X):
         """ Perform classification on an array of test vectors X. """
-        pass
+        predictions = []
+        for text in x:
+            predict = {key: log(value) for key, value in self.classes.items()}
+            for word in text:
+                if word in self.dictionary:
+                    for key in predict.keys():
+                        predict[key] += log(self.dictionary[word][key])
+
+            predicted_classes = dict(sorted(predict.items(), key=lambda x: x[1]))
+            predictions.append(list(predicted_classes)[-1])
+        return 
 
     def score(self, X_test, y_test):
         """ Returns the mean accuracy on the given test data and labels. """
