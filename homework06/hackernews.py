@@ -39,25 +39,33 @@ def update_news():
 
 @route("/classify")
 def classify_news():
-    recently_marked_news = (
-        s.query(News).filter(News.title not in x_train and News.label != None).all()
-    )
-    x_extra_train = [row.title for row in recently_marked_news]
-    y_extra_train = [row.label for row in recently_marked_news]
-    classifier.fit(x_extra_train, y_extra_train)
-
-    blank_rows = s.query(News).filter(News.label == None).all()
-    x = [row.title for row in blank_rows]
-    labels = classifier.predict(x)
-    classified_news = [blank_rows[i] for i in range(len(blank_rows)) if labels[i] == "good"]
-    return template("news_recomend", rows=classified_news)
+    s = session()
+    labeled = s.query(News).filter(News.label != None).all()
+    x = [row.title for row in labeled]
+    y = [row.label for row in labeled]
+    x = [prepare(title) for title in x]
+    x_train, y_train = x[: round(len(labeled) * 0.7)], y[: round(len(labeled) * 0.7)]
+    x_test, y_test = x[round(len(labeled) * 0.7) :], y[round(len(labeled) * 0.7) :]
+    model = NaiveBayesClassifier(1)
+    model.fit(x_train, y_train)
+    print(model.score(x_test, y_test))
+    unlabeled = s.query(News).filter(News.label == None).all()
+    x_class = [prepare(row.title) for row in unlabeled]
+    predictions = model.predict(x_class)
+    classified_news = []
+    second_priority = []
+    third_priority = []
+    for i, row in enumerate(unlabeled):
+        if predictions[i] == "good":
+            classified_news.append(row)
+        elif predictions[i] == "maybe":
+            second_priority.append(row)
+        else:
+            third_priority.append(row)
+    classified_news.extend(second_priority)
+    classified_news.extend(third_priority)
+    return template("news_recommendations", rows=classified_news)
 
 
 if __name__ == "__main__":
-    s = session()
-    classifier = NaiveBayesClassifier()
-    marked_news = s.query(News).filter(News.label != None).all()
-    x_train = [row.title for row in marked_news]
-    y_train = [row.label for row in marked_news]
-    classifier.fit(x_train, y_train)
     run(host="localhost", port=8080)
